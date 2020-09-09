@@ -1,0 +1,21 @@
+#pathfinder-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 750px;
+}
+
+.node {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+}
+
+.start {
+  background-color: lightgreen;
+}
+
+.end {
+  background-color: red;
+}
