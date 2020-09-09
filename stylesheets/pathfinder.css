@@ -19,3 +19,11 @@
 .end {
   background-color: red;
 }
+
+.visited {
+  background-color: blue;
+}
+
+.isOpen {
+  background-color: green;
+}

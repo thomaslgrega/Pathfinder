@@ -1,8 +1,14 @@
 import pythagoreanTheorem from "./pythagoreanTheorem";
 
+const openNodes = [];
+const visited = [];
+
 const aStarAlgorithm = (nodes) => {
   let start;
   let end;
+
+  // const openNodes = [];
+  // const visited = [];
 
   // search for the start and end nodes
   nodes.forEach(row => {
@@ -13,35 +19,38 @@ const aStarAlgorithm = (nodes) => {
         end = node;
       }
     })
-  })
+  });
 
-  openNodes.push(start);
-  visited = [];
+  debugger
+  if (!visited.includes(start)) {
+    start.isOpen = true;
+    openNodes.push(start);
+  }
 
   if (openNodes.length > 0) {
-    let nextNodeIdx = 0;
-    let nextNode;
-
+    let lowestIdx = 0;
+    let currentNode;
     // loop through openNodes to find the lowest f to get next node to traverse 
     openNodes.forEach((node, i) => {
-      if (node.f < openNodes[nextNodeIdx].f) {
-        nextNodeIdx = i;
-        nextNode = node;
+      if (node.f < openNodes[lowestIdx].f) {
+        lowestIdx = i;
       }
     })
 
-    // if nextNode is end node, search is done
-    if (nextNode === end) {
+    currentNode = openNodes[lowestIdx];
+    // if currentNode is end node, search is done
+    if (currentNode === end) {
       console.log('DONE');
     }
 
     // remove node from open Nodes list and add it to the visited nodes list
-    openNodes.splice(nextNodeIdx, 1);
-    visited.push(nextNode);
-
-    // check all connected nodes for their 
-    node.connectedNodes.forEach(connectedNode => {
-      let newG = nextNode.g + 1;
+    currentNode.isOpen = false;
+    currentNode.visited = true;
+    openNodes.splice(lowestIdx, 1);
+    visited.push(currentNode);
+    // check all connected nodes for their g, h and f
+    currentNode.connectedNodes.forEach(connectedNode => {
+      let newG = currentNode.g + 1;
       if (!visited.includes(connectedNode)) {
         // if neighbor is NOT in the visited nodes list but in the open nodes list
         if (openNodes.includes(connectedNode)) {
@@ -54,6 +63,7 @@ const aStarAlgorithm = (nodes) => {
         } else {
           // assign the g to the newG because it shouldn't have one and add this node to openNodes list
           connectedNode.g = newG;
+          connectedNode.isOpen = true;
           openNodes.push(connectedNode);
         }
 
@@ -65,10 +75,10 @@ const aStarAlgorithm = (nodes) => {
     })
 
     // as long as there are more open nodes, keep searching
-    window.requestAnimationFrame(aStarAlgorithm);
+    // window.requestAnimationFrame(aStarAlgorithm);
   } else {
     // there's no path
-
+    console.log('No path!')
   }
 }
 

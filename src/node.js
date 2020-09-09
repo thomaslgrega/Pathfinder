@@ -4,21 +4,24 @@ class Node {
     this.i = i;
     this.j = j;
     // "distance" from start to this node.
-    this.g;
+    this.g = 0;
     // heuristic - basically a guess of how far to the end node (straight shot distance to end node)
-    this.h;
+    this.h = 0;
     // the total of j and h (basically, the lowest h is the path that the algorithm will take)
-    this.f;
-    this.isStart = (i === 0 && j === 0)
-    this.isEnd = (i === 2 && j === 4)
+    this.f = 0;
+    this.isStart = (i === 0 && j === 25);
+    this.isEnd = (i === 25 && j === 15);
+    this.isOpen = false;
+    this.visited = false;
     this.connectedNodes = [];
+    // the previous node that we got here from. Used to backtrack when we reach the end node to
+    // find the path
     this.cameFrom;
   }
 
 
 
   findConnectedNodes(nodes) {
-    debugger
     // don't add nodes if they're out of bounds
     if (this.i < nodes.length - 1) {
       this.connectedNodes.push(nodes[this.i + 1][this.j])
