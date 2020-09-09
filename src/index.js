@@ -1,6 +1,9 @@
-import { createGrid, createNodes } from './pathfinder';
+import { createNodes, renderNodes } from './pathfinder';
+import aStarAlgorithm from "./astar";
 
 const nodes = createNodes();
 
-closedNodes = [];
-createGrid();
+renderNodes(nodes);
+
+const openNodes = [];
+const closedNodes = [];
