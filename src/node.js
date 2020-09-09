@@ -9,8 +9,8 @@ class Node {
     this.h = 0;
     // the total of j and h (basically, the lowest h is the path that the algorithm will take)
     this.f = 0;
-    this.isStart = (i === 0 && j === 25);
-    this.isEnd = (i === 25 && j === 15);
+    this.isStart = (i === 15 && j === 0);
+    this.isEnd = (i === 20 && j === 25);
     this.isOpen = false;
     this.visited = false;
     this.connectedNodes = [];

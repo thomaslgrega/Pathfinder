@@ -28,4 +28,4 @@ const animateTest = () => {
 
 }
 
-startAnimate(40);
+startAnimate(60);

@@ -1,7 +1,9 @@
 import pythagoreanTheorem from "./pythagoreanTheorem";
+import manhattanDistance from "./manhattanDistance";
 
 const openNodes = [];
 const visited = [];
+const finalPath = []
 
 const aStarAlgorithm = (nodes) => {
   let start;
@@ -38,9 +40,12 @@ const aStarAlgorithm = (nodes) => {
     })
 
     currentNode = openNodes[lowestIdx];
-    // if currentNode is end node, search is done
+    // if currentNode is end node, search is done so draw the resulting path
     if (currentNode === end) {
-      console.log('DONE');
+      finalPath.push(currentNode);
+      while (currentNode.cameFrom) {
+        currentNode = currentNode.cameFrom;
+      }
     }
 
     // remove node from open Nodes list and add it to the visited nodes list
@@ -67,15 +72,15 @@ const aStarAlgorithm = (nodes) => {
           openNodes.push(connectedNode);
         }
 
-        // find heuristic value by using pythagorean theorem from the node to end node
-        connectedNode.h = pythagoreanTheorem(connectedNode, end);
+        // find heuristic value by using pythagorean theorem from the node to end node (if nodes can move diagonal)
+        // connectedNode.h = pythagoreanTheorem(connectedNode, end);
+
+        // find heuristic value by using manhattanDistance (because nodes can't move diagonal)
+        connectedNode.h = manhattanDistance(connectedNode, end);
         // Add heuristic and g value (how long it took to get to this node) to get f
         connectedNode.f = connectedNode.g + connectedNode.h
       }
     })
-
-    // as long as there are more open nodes, keep searching
-    // window.requestAnimationFrame(aStarAlgorithm);
   } else {
     // there's no path
     console.log('No path!')
