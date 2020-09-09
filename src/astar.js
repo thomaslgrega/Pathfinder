@@ -5,7 +5,7 @@ const openNodes = [];
 const visited = [];
 const finalPath = []
 
-const aStarAlgorithm = (nodes) => {
+const aStarAlgorithm = (nodes, requestId) => {
   let start;
   let end;
 
@@ -23,7 +23,6 @@ const aStarAlgorithm = (nodes) => {
     })
   });
 
-  debugger
   if (!visited.includes(start)) {
     start.isOpen = true;
     openNodes.push(start);
@@ -44,8 +43,12 @@ const aStarAlgorithm = (nodes) => {
     if (currentNode === end) {
       finalPath.push(currentNode);
       while (currentNode.cameFrom) {
+        currentNode.isPath = true;
+        finalPath.push(currentNode.cameFrom);
         currentNode = currentNode.cameFrom;
       }
+
+      return true;
     }
 
     // remove node from open Nodes list and add it to the visited nodes list
@@ -56,7 +59,7 @@ const aStarAlgorithm = (nodes) => {
     // check all connected nodes for their g, h and f
     currentNode.connectedNodes.forEach(connectedNode => {
       let newG = currentNode.g + 1;
-      if (!visited.includes(connectedNode)) {
+      if (!visited.includes(connectedNode) && !connectedNode.isWall) {
         // if neighbor is NOT in the visited nodes list but in the open nodes list
         if (openNodes.includes(connectedNode)) {
           // and the newG is less than the current g of the neighbor, replace it with the newG.
@@ -78,12 +81,13 @@ const aStarAlgorithm = (nodes) => {
         // find heuristic value by using manhattanDistance (because nodes can't move diagonal)
         connectedNode.h = manhattanDistance(connectedNode, end);
         // Add heuristic and g value (how long it took to get to this node) to get f
-        connectedNode.f = connectedNode.g + connectedNode.h
+        connectedNode.f = connectedNode.g + connectedNode.h;
+        connectedNode.cameFrom = currentNode;
       }
     })
   } else {
     // there's no path
-    console.log('No path!')
+    return true;
   }
 }
 

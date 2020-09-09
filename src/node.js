@@ -1,3 +1,9 @@
+// randomly generate numbers to determine start and end Nodes
+const startI = Math.floor(Math.random() * 50)
+const startJ = Math.floor(Math.random() * 30)
+const endI = Math.floor(Math.random() * 50)
+const endJ = Math.floor(Math.random() * 30)
+
 class Node {
   constructor(i, j) {
     // i and j are the location they are in the array
@@ -9,11 +15,17 @@ class Node {
     this.h = 0;
     // the total of j and h (basically, the lowest h is the path that the algorithm will take)
     this.f = 0;
-    this.isStart = (i === 15 && j === 0);
-    this.isEnd = (i === 20 && j === 25);
+    this.isStart = (i === startI && j === startJ);
+    this.isEnd = (i === endI && j === endJ);
     this.isOpen = false;
     this.visited = false;
     this.connectedNodes = [];
+    this.isPath = false;
+    // randomly determine if this node will be a wall
+    this.isWall = false;
+    if (Math.random() < 0.3 && !this.isStart && !this.isEnd) {
+      this.isWall = true;
+    }
     // the previous node that we got here from. Used to backtrack when we reach the end node to
     // find the path
     this.cameFrom;
