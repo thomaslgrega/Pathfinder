@@ -2,7 +2,8 @@ import { createNodes, renderNodes } from './pathfinder';
 import aStarAlgorithm from "./astar";
 import dijkstrasAlgorithm from "./dijkstras"
 
-const nodes = createNodes();
+const nodes = createNodes("dijkstras");
+// const nodes = createNodes();
 
 let fpsInterval, done, timeStart, now, elapsed;
 

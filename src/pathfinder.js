@@ -3,14 +3,14 @@ import Node from "./node";
 // const container = document.getElementById('pathfinder-grid');
 
 // creates a 2D array full of Node objects
-export const createNodes = () => {
+export const createNodes = (algo) => {
   const cols = 50;
   const rows = 30;
   const nodes = new Array(cols);
   for (let i = 0; i < cols; i++) {
     nodes[i] = new Array(rows);
     for (let j = 0; j < rows; j++) {
-      nodes[i][j] = new Node(i, j);
+      nodes[i][j] = new Node(i, j, algo);
     }
   }
 

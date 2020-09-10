@@ -19,7 +19,7 @@ const dijkstrasAlgorithm = (nodes) => {
       }
     })
   });
-
+  debugger
   start.g = 0;
 
   if (!visited.includes(start)) {
@@ -30,7 +30,7 @@ const dijkstrasAlgorithm = (nodes) => {
 
   if (openNodes.length > 0) {
     let lowestIdx = 0;
-    let currentNode;
+    currentNode;
     // loop through openNodes to find the lowest g to get currentNode
     openNodes.forEach((node, i) => {
       if (node.g < openNodes[lowestIdx].g) {
@@ -58,10 +58,13 @@ const dijkstrasAlgorithm = (nodes) => {
         const tentative = currentNode.g + neighbor.weight;
         if (tentative < neighbor.g) {
           neighbor.g = tentative;
+          neighbor.cameFrom = currentNode;
         }
-  
+        
         neighbor.isOpen = true;
-        openNodes.push(neighbor);
+        if (!openNodes.includes(neighbor)) {
+          openNodes.push(neighbor);
+        }
       }
     })
 
