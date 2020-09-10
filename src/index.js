@@ -1,13 +1,11 @@
 import { createNodes, renderNodes } from './pathfinder';
+import Node from './node'
 import aStarAlgorithm from "./astar";
 import dijkstrasAlgorithm from "./dijkstras"
 
-// const nodes = createNodes("dijkstras");
-// const nodes = createNodes();
-
-let fpsInterval, done, timeStart, now, elapsed;
-
 // ************ Used to control animation speed. May use it in the future *************
+// let fpsInterval, done, timeStart, now, elapsed;
+
 // const startAnimateAStar = (fps) => {
 //   fpsInterval = 1000 / fps;
 //   timeStart = Date.now();
@@ -72,3 +70,27 @@ aStarBtn.addEventListener("click", prepareAStar)
 
 const dijkstrasBtn = document.getElementById("dijkstras-btn");
 dijkstrasBtn.addEventListener("click", prepareDijkstras)
+
+const generateEmptyBoard = () => {
+  const cols = 60;
+  const rows = 30;
+  const nodes = new Array(cols);
+  for (let i = 0; i < cols; i++) {
+    nodes[i] = new Array(rows);
+    for (let j = 0; j < rows; j++) {
+      nodes[i][j] = new Node(i, j);
+    }
+  }
+
+  renderNodes(nodes);
+}
+
+generateEmptyBoard()
+
+const addWall = (e) => {
+  debugger
+  e.target.classList.add('is-wall');
+}
+
+const grid = document.getElementById("pathfinder-grid");
+grid.addEventListener("click", addWall)

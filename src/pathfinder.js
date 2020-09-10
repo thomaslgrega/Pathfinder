@@ -1,7 +1,5 @@
 import Node from "./node";
 
-// const container = document.getElementById('pathfinder-grid');
-
 // creates a 2D array full of Node objects
 export const createNodes = (algo) => {
   // randomly generate numbers to determine start and end Nodes
@@ -21,6 +19,7 @@ export const createNodes = (algo) => {
     }
   }
 
+  // find the neighbors of each node
   nodes.forEach(row => {
     row.forEach(node => {
       node.findConnectedNodes(nodes);
