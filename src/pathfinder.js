@@ -46,12 +46,15 @@ export const renderNodes = (nodes) => {
       } else if (node.visited) {
         newDiv.classList.add('visited')
       } else if (node.isOpen) {
-        debugger
         newDiv.classList.add('is-open')
       } 
 
       if (node.isWall) {
         newDiv.classList.add('is-wall')
+      }
+
+      if (node.isWeighted) {
+        newDiv.classList.add('is-weighted')
       }
 
       if (node.isPath && !node.isEnd && !node.isStart) {

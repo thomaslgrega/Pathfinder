@@ -5,11 +5,17 @@ const endI = Math.floor(Math.random() * 50)
 const endJ = Math.floor(Math.random() * 30)
 
 class Node {
-  constructor(i, j) {
-    // i and j are the location they are in the array
+  constructor(i, j, algo) {
+    // i and j are the location they are in the grid
     this.i = i;
     this.j = j;
     // "distance" from start to this node.
+    if (algo === "djikstras") {
+      this.g = Infinity;
+      this.weight = 1;
+    } else {
+      this.g = 0;
+    }
     this.g = 0;
     // heuristic - basically a guess of how far to the end node (straight shot distance to end node)
     this.h = 0;
@@ -23,9 +29,10 @@ class Node {
     this.isPath = false;
     // randomly determine if this node will be a wall
     this.isWall = false;
-    if (Math.random() < 0.3 && !this.isStart && !this.isEnd) {
+    if (Math.random() < 0.25 && !this.isStart && !this.isEnd) {
       this.isWall = true;
     }
+
     // the previous node that we got here from. Used to backtrack when we reach the end node to
     // find the path
     this.cameFrom;

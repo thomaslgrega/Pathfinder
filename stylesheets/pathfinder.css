@@ -1,15 +1,21 @@
+
 #pathfinder-grid {
+  margin: 0 auto;
+  margin-top: 65px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 100%;
-  height: 750px;
+  width: 1100px;
+  height: 660px;
+  background-color: lightgray;
+  border: 2px solid rgb(58, 57, 57);
 }
 
 .node {
   width: 20px;
   height: 20px;
-  border: 1px solid black;
+  border: 1px solid rgb(58, 57, 57);
+;
 }
 
 .start {
@@ -22,7 +28,6 @@
 
 .visited {
   background-color: rgb(17, 104, 217);
-  /* background-color: blue; */
 }
 
 .is-open {
