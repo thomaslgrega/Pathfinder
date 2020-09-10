@@ -25,20 +25,24 @@
   background-color: red;
 }
 
-.visited {
-  /* background-color: rgb(17, 104, 217); */
-  background-color: #d4d2d4;
-}
-
 .is-open {
   /* background-color: rgb(0, 217, 159); */
   background-color: rgb(17, 104, 217);
 }
 
-.is-path {
-  background-color: yellow;
-}
-
 .is-wall {
   background-color: rgb(58, 57, 57);
+}
+
+.is-weighted {
+  background-color: indigo;
+}
+
+.visited {
+  /* background-color: rgb(17, 104, 217); */
+  background-color: #d4d2d4;
+}
+
+.is-path {
+  background-color: yellow;
 }

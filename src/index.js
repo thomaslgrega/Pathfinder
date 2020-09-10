@@ -27,15 +27,17 @@ const animateAStar = () => {
   renderNodes(nodes);
 }
 
-// const animateAStar = () => {
-//   debugger
-//   const nodes = createNodes();
-//   let done = aStarAlgorithm(nodes);
-//   const requestId = requestAnimationFrame(animateAStar);
-//   if (done) {
-//     cancelAnimationFrame(requestId)
-//   }
-// }
+const animateAStar = () => {
+  debugger
+  const nodes = createNodes();
+  let done = aStarAlgorithm(nodes);
+  const requestId = requestAnimationFrame(animateAStar);
+  if (done) {
+    cancelAnimationFrame(requestId)
+  }
+
+  
+}
 
 const startAnimateDijkstras = (fps) => {
   fpsInterval = 1000 / fps;
