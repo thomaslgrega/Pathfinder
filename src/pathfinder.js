@@ -4,13 +4,20 @@ import Node from "./node";
 
 // creates a 2D array full of Node objects
 export const createNodes = (algo) => {
-  const cols = 50;
+  // randomly generate numbers to determine start and end Nodes
+  const startI = Math.floor(Math.random() * 50)
+  const startJ = Math.floor(Math.random() * 30)
+  const endI = Math.floor(Math.random() * 50)
+  const endJ = Math.floor(Math.random() * 30)
+
+  // size of grid
+  const cols = 60;
   const rows = 30;
   const nodes = new Array(cols);
   for (let i = 0; i < cols; i++) {
     nodes[i] = new Array(rows);
     for (let j = 0; j < rows; j++) {
-      nodes[i][j] = new Node(i, j, algo);
+      nodes[i][j] = new Node(i, j, startI, startJ, endI, endJ, algo);
     }
   }
 

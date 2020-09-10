@@ -1,8 +1,8 @@
 // https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Algorithm
 
-const openNodes = [];
-const visited = [];
-const finalPath = []
+let openNodes = [];
+let visited = [];
+let finalPath = []
 
 const dijkstrasAlgorithm = (nodes) => {
   let start;
@@ -23,6 +23,9 @@ const dijkstrasAlgorithm = (nodes) => {
   start.g = 0;
 
   if (!visited.includes(start)) {
+    openNodes = [];
+    visited = [];
+    finalPath = [];
     start.isOpen = true;
     openNodes.push(start);
     currentNode = start;

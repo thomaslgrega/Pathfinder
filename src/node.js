@@ -1,11 +1,5 @@
-// randomly generate numbers to determine start and end Nodes
-const startI = Math.floor(Math.random() * 50)
-const startJ = Math.floor(Math.random() * 30)
-const endI = Math.floor(Math.random() * 50)
-const endJ = Math.floor(Math.random() * 30)
-
 class Node {
-  constructor(i, j, algo) {
+  constructor(i, j, startI, startJ, endI, endJ, algo) {
     // i and j are the location they are in the grid
     this.i = i;
     this.j = j;

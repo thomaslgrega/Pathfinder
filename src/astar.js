@@ -3,9 +3,9 @@
 import pythagoreanTheorem from "./pythagoreanTheorem";
 import manhattanDistance from "./manhattanDistance";
 
-const openNodes = [];
-const visited = [];
-const finalPath = []
+let openNodes = [];
+let visited = [];
+let finalPath = []
 
 const aStarAlgorithm = (nodes) => {
   let start;
@@ -32,6 +32,9 @@ const aStarAlgorithm = (nodes) => {
     //     }
     //   })
     // });
+    openNodes = [];
+    visited = [];
+    finalPath = [];
     start.isOpen = true;
     openNodes.push(start);
   }
