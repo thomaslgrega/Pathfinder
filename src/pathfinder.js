@@ -3,21 +3,20 @@ import Node from "./node";
 // creates a 2D array full of Node objects
 export const createNodes = (algo) => {
   // randomly generate numbers to determine start and end Nodes
-  const startI = Math.floor(Math.random() * 50)
-  const startJ = Math.floor(Math.random() * 30)
-  const endI = Math.floor(Math.random() * 50)
-  const endJ = Math.floor(Math.random() * 30)
 
-  // size of grid
-  const cols = 60;
-  const rows = 30;
-  const nodes = new Array(cols);
-  for (let i = 0; i < cols; i++) {
-    nodes[i] = new Array(rows);
-    for (let j = 0; j < rows; j++) {
-      nodes[i][j] = new Node(i, j, startI, startJ, endI, endJ, algo);
-    }
-  }
+  const nodes = [];
+  const rows = Array.from(document.querySelectorAll('.row-div'));
+  rows.forEach((row, i) => {
+    const nodeRow = [];
+    Array.from(row.children).forEach((nodeDiv, j) => {
+      const isWall = Array.from(nodeDiv.classList).includes('is-wall');
+      const isStart = Array.from(nodeDiv.classList).includes('start');
+      const isEnd = Array.from(nodeDiv.classList).includes('end');
+      const newNode = new Node(i, j, isStart, isEnd, isWall, algo)
+      nodeRow.push(newNode);
+    });
+    nodes.push(nodeRow);
+  })
 
   // find the neighbors of each node
   nodes.forEach(row => {
@@ -44,6 +43,7 @@ export const renderNodes = (nodes) => {
     row.forEach(node => {
       let newDiv = document.createElement("div");
       newDiv.classList.add('node');
+      // if (node.isStart) {
       if (node.isStart) {
         newDiv.classList.add('start');
         newDiv.classList.add('open');

@@ -1,10 +1,10 @@
 class Node {
-  constructor(i, j, startI, startJ, endI, endJ, algo) {
+  constructor(i, j, isStart, isEnd, isWall, algo) {
     // i and j are the location they are in the grid
     this.i = i;
     this.j = j;
-    this.isStart = (i === startI && j === startJ);
-    this.isEnd = (i === endI && j === endJ);
+    this.isStart = isStart;
+    this.isEnd = isEnd;
     // "distance" from start to this node.
     if (algo === "dijkstras") {
       this.g = Infinity;
@@ -27,18 +27,16 @@ class Node {
     this.visited = false;
     this.connectedNodes = [];
     this.isPath = false;
+    this.isWall = isWall;
     // randomly determine if this node will be a wall
-    this.isWall = false;
-    if (Math.random() < 0.25 && !this.isStart && !this.isEnd) {
-      this.isWall = true;
-    }
+    // if (Math.random() < 0.25 && !this.isStart && !this.isEnd) {
+    //   this.isWall = true;
+    // }
 
     // the previous node that we got here from. Used to backtrack when we reach the end node to
     // find the path
     this.cameFrom;
   }
-
-
 
   findConnectedNodes(nodes) {
     // don't add nodes if they're out of bounds

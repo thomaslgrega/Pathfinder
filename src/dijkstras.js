@@ -19,7 +19,7 @@ const dijkstrasAlgorithm = (nodes) => {
       }
     })
   });
-  debugger
+
   start.g = 0;
 
   if (!visited.includes(start)) {
