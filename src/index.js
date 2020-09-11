@@ -87,8 +87,8 @@ dijkstrasBtn.addEventListener("click", prepareDijkstras);
 const randomWallsBtn = document.getElementById("random-btn");
 randomWallsBtn.addEventListener("click", handleRandomWalls); 
 
-const recursiveDivision = document.getElementById("recursive-division");
-recursiveDivision.addEventListener("click", () => recursiveDivisionClosure());
+// const recursiveDivision = document.getElementById("recursive-division");
+// recursiveDivision.addEventListener("click", () => recursiveDivisionClosure());
 
 const generateEmptyBoard = () => {
   const cols = 60;
