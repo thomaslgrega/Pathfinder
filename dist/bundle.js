@@ -729,6 +729,42 @@ __webpack_require__.r(__webpack_exports__);
 // 5. if there are divided areas that have height AND width > 2, repeat
 // 6. else end process
 
+var findTwoSplits = function findTwoSplits(chamber, idx, vertBool) {
+  var newChambers = [];
+  var firstChamber = [];
+  var secondChamber = [];
+
+  if (vertBool) {
+    firstChamber = chamber.slice(0, idx);
+    secondChamber = chamber.slice(idx + 1, chamber.length);
+    newChambers.push(firstChamber, secondChamber);
+  } else {
+    for (var i = 0; i < chamber.length; i++) {
+      var newCol = [];
+
+      for (var j = 0; j < idx; j++) {
+        newCol.push(chamber[i][j]);
+      }
+
+      firstChamber.push(newCol);
+    }
+
+    for (var _i = 0; _i < chamber.length; _i++) {
+      var _newCol = [];
+
+      for (var _j = idx + 1; _j < chamber[0].length; _j++) {
+        _newCol.push(chamber[_i][_j]);
+      }
+
+      secondChamber.push(_newCol);
+    }
+
+    newChambers.push(firstChamber, secondChamber);
+  }
+
+  return newChambers;
+};
+
 var recursiveDivisionClosure = function recursiveDivisionClosure() {
   // clear grid 
   var container = document.getElementById('pathfinder-grid');
@@ -752,23 +788,7 @@ var recursiveDivisionClosure = function recursiveDivisionClosure() {
         nodes[i][j].isWall = true;
       }
     }
-  } // create random start and end nodes at opposite sides
-  // if (Math.random() < 0.5) {
-  //   const randomStartJ = Math.floor((Math.random() * 31));
-  //   const randomEndJ = Math.floor((Math.random() * 31));
-  //   nodes[0][randomStartJ].isStart = true;
-  //   nodes[0][randomStartJ].isWall = false;
-  //   nodes[60][randomEndJ].isEnd = true;
-  //   nodes[60][randomEndJ].isWall = false;
-  // } else {
-  //   const randomStartI = Math.floor((Math.random() * 61));
-  //   const randomEndI = Math.floor((Math.random() * 61));
-  //   nodes[randomStartI][0].isStart = true;
-  //   nodes[randomStartI][0].isWall = false;
-  //   nodes[randomEndI][30].isEnd = true;
-  //   nodes[randomEndI][30].isWall = false;
-  // }
-  // get the "chamber" after creating outside walls
+  } // get the "chamber" after creating outside walls
 
 
   Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes);
@@ -784,13 +804,35 @@ var recursiveDivisionClosure = function recursiveDivisionClosure() {
       });
       initialChamber.push(newRow);
     }
-  }); // closure queue for the divided squares. I may switch to just randomly choosing from the array
+  });
+  var randomStartJ = Math.floor(Math.random() * initialChamber[0].length);
+  var randomStartI = Math.floor(Math.random() * initialChamber.length);
+  var randomEndJ = Math.floor(Math.random() * initialChamber[0].length);
+  var randomEndI = Math.floor(Math.random() * initialChamber.length);
+  initialChamber[randomStartI][randomStartJ].isStart = true;
+  initialChamber[randomEndI][randomEndJ].isEnd = true; // create random start and end nodes at opposite sides
+  // if (Math.random() < 0.5) {
+  //   const randomStartJ = Math.floor((Math.random() * 31));
+  //   const randomEndJ = Math.floor((Math.random() * 31));
+  //   nodes[0][randomStartJ].isStart = true;
+  //   nodes[0][randomStartJ].isWall = false;
+  //   nodes[60][randomEndJ].isEnd = true;
+  //   nodes[60][randomEndJ].isWall = false;
+  // } else {
+  //   const randomStartI = Math.floor((Math.random() * 61));
+  //   const randomEndI = Math.floor((Math.random() * 61));
+  //   nodes[randomStartI][0].isStart = true;
+  //   nodes[randomStartI][0].isWall = false;
+  //   nodes[randomEndI][30].isEnd = true;
+  //   nodes[randomEndI][30].isWall = false;
+  // }
+  // closure queue for the divided squares. I may switch to just randomly choosing from the array
 
   var chambersQueue = [initialChamber];
 
   var recursiveDivision = function recursiveDivision() {
     if (chambersQueue.length === 0) return;
-    var currentChamber = chambersQueue.shift(); // randomly determine if chamber should be cut horizontal or vertical
+    var currentChamber = chambersQueue.shift(); // determine if chamber should be cut horizontal or vertical
 
     var cutDirection = currentChamber.length > currentChamber[0].length ? "vert" : "horiz";
 
@@ -798,29 +840,68 @@ var recursiveDivisionClosure = function recursiveDivisionClosure() {
       // have to create an odd index for the walls because 0th and last index are walls 
       var randomCol = Math.floor(Math.random() * (currentChamber.length / 2 - 1)) * 2 + 1;
 
-      for (var _j = 0; _j < currentChamber[randomCol].length; _j++) {
-        currentChamber[randomCol][_j].isWall = true;
+      for (var _j2 = 0; _j2 < currentChamber[randomCol].length; _j2++) {
+        if (!currentChamber[randomCol][_j2].isStart && !currentChamber[randomCol][_j2].isEnd) {
+          currentChamber[randomCol][_j2].isWall = true;
+        }
       } // create a passage at a random node on an even index along the wall line (technically odd index on the original grid)
 
 
       var randomJ = Math.floor(Math.random() * (currentChamber[randomCol].length / 2)) * 2;
-      currentChamber[randomCol][randomJ].isWall = false;
+      currentChamber[randomCol][randomJ].isWall = false; // find the two new chambers
+
+      var newChambers = findTwoSplits(currentChamber, randomCol, true); // push the new Chambers into queue only if they are length AND width 3 or higher
+
+      newChambers.forEach(function (newChamber) {
+        if (newChamber.length > 2 && newChamber[0].length > 2) {
+          chambersQueue.push(newChamber);
+        }
+      });
     } else {
       var randomRow = Math.floor(Math.random() * (currentChamber[0].length / 2 - 1)) * 2 + 1;
 
-      for (var _i = 0; _i < currentChamber.length; _i++) {
-        currentChamber[_i][randomRow].isWall = true;
+      for (var _i2 = 0; _i2 < currentChamber.length; _i2++) {
+        if (!currentChamber[_i2][randomRow].isStart && !currentChamber[_i2][randomRow].isEnd) {
+          currentChamber[_i2][randomRow].isWall = true;
+        }
       } // create a passage at a random node on an even index along the wall line (technically odd index on the original grid)
 
 
       var randomI = Math.floor(Math.random() * (currentChamber.length / 2)) * 2;
-      currentChamber[randomI][randomRow].isWall = false;
-    }
+      currentChamber[randomI][randomRow].isWall = false; // find the two new chambers
 
-    window.requestAnimationFrame(recursiveDivision);
+      var _newChambers = findTwoSplits(currentChamber, randomRow, false); // push the new Chambers into queue only if they are length AND width 3 or higher
+
+
+      _newChambers.forEach(function (newChamber) {
+        if (newChamber.length > 2 && newChamber[0].length > 2) {
+          chambersQueue.push(newChamber);
+        }
+      });
+    } // recursiveDivision();
+
+
+    requestAnimationFrame(function () {
+      return Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes);
+    });
+    requestAnimationFrame(recursiveDivision);
   };
 
-  recursiveDivision();
+  recursiveDivision(); // get all nodes that aren't walls
+
+  var notWallNodes = [];
+  nodes.forEach(function (col) {
+    col.forEach(function (node) {
+      if (!node.isWall) {
+        notWallNodes.push(node);
+      }
+    });
+  }); // choose random start and end nodes out of the notWallNodes array
+  // const randomStart = notWallNodes.splice([Math.floor(Math.random() * notWallNodes.length)], 1);
+  // const randomEnd = notWallNodes.splice([Math.floor(Math.random() * notWallNodes.length)], 1);
+  // randomStart.isStart = true;
+  // randomEnd.isEnd = true;
+
   Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes);
 };
 

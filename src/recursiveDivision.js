@@ -11,6 +11,37 @@ import Node from "./node";
 // 5. if there are divided areas that have height AND width > 2, repeat
 // 6. else end process
 
+const findTwoSplits = (chamber, idx, vertBool) => {
+  const newChambers = [];
+  let firstChamber = [];
+  let secondChamber = [];
+  if (vertBool) {
+    firstChamber = chamber.slice(0, idx);
+    secondChamber = chamber.slice(idx + 1, chamber.length);
+    newChambers.push(firstChamber, secondChamber);
+  } else {
+    for (let i = 0; i < chamber.length; i++) {
+      const newCol = [];
+      for (let j = 0; j < idx; j++) {
+        newCol.push(chamber[i][j]);
+      }
+      firstChamber.push(newCol);
+    }
+    
+    for (let i = 0; i < chamber.length; i++) {
+      const newCol = [];
+      for (let j = idx + 1; j < chamber[0].length; j++) {
+        newCol.push(chamber[i][j]);
+      }
+      secondChamber.push(newCol);
+    }
+
+    newChambers.push(firstChamber, secondChamber);
+  }
+
+  return newChambers;
+}
+
 const recursiveDivisionClosure = () => {
   // clear grid 
   const container = document.getElementById('pathfinder-grid');
@@ -32,6 +63,28 @@ const recursiveDivisionClosure = () => {
     }
   }
 
+  // get the "chamber" after creating outside walls
+  renderNodes(nodes);
+  const initialChamber = [];
+  nodes.forEach((row, i) => {
+    const newRow = [];
+    if (i !== 0 && i !== 60) {
+      row.forEach(node => {
+        if (!node.isWall) {
+          newRow.push(node);
+        }
+      });
+      initialChamber.push(newRow);
+    }
+  });
+
+  const randomStartJ = Math.floor((Math.random() * initialChamber[0].length));
+  const randomStartI = Math.floor((Math.random() * initialChamber.length));
+  const randomEndJ = Math.floor((Math.random() * initialChamber[0].length));
+  const randomEndI = Math.floor((Math.random() * initialChamber.length));
+
+  initialChamber[randomStartI][randomStartJ].isStart = true;
+  initialChamber[randomEndI][randomEndJ].isEnd = true;
   // create random start and end nodes at opposite sides
   // if (Math.random() < 0.5) {
   //   const randomStartJ = Math.floor((Math.random() * 31));
@@ -49,59 +102,79 @@ const recursiveDivisionClosure = () => {
   //   nodes[randomEndI][30].isWall = false;
   // }
 
-  // get the "chamber" after creating outside walls
-  renderNodes(nodes);
-  const initialChamber = [];
-  nodes.forEach((row, i) => {
-    const newRow = [];
-    if (i !== 0 && i !== 60) {
-      row.forEach(node => {
-        if (!node.isWall) {
-          newRow.push(node);
-        }
-      });
-      initialChamber.push(newRow);
-    }
-  });
-
   // closure queue for the divided squares. I may switch to just randomly choosing from the array
   const chambersQueue = [initialChamber];
 
   const recursiveDivision = () => {
     if (chambersQueue.length === 0) return;
     const currentChamber = chambersQueue.shift();
-    // randomly determine if chamber should be cut horizontal or vertical
+    // determine if chamber should be cut horizontal or vertical
     const cutDirection = currentChamber.length > currentChamber[0].length ? "vert" : "horiz";
     if (cutDirection === "vert") {
       // have to create an odd index for the walls because 0th and last index are walls 
       const randomCol = Math.floor(Math.random() * ((currentChamber.length / 2) - 1)) * 2 + 1
       for (let j = 0; j < currentChamber[randomCol].length; j++) {
-        currentChamber[randomCol][j].isWall = true;
+        if (!currentChamber[randomCol][j].isStart && !currentChamber[randomCol][j].isEnd) {
+          currentChamber[randomCol][j].isWall = true;
+        }
       }
       // create a passage at a random node on an even index along the wall line (technically odd index on the original grid)
       const randomJ = Math.floor(Math.random() * (currentChamber[randomCol].length / 2)) * 2;
       currentChamber[randomCol][randomJ].isWall = false;
 
-
+      // find the two new chambers
+      const newChambers = findTwoSplits(currentChamber, randomCol, true);
+      // push the new Chambers into queue only if they are length AND width 3 or higher
+      newChambers.forEach(newChamber => {
+        if (newChamber.length > 2 && newChamber[0].length > 2) {
+          chambersQueue.push(newChamber);
+        }
+      });
 
     } else {
       const randomRow = Math.floor(Math.random() * ((currentChamber[0].length / 2) - 1)) * 2 + 1;
       for (let i = 0; i < currentChamber.length; i++) {
-        currentChamber[i][randomRow].isWall = true;
+        if (!currentChamber[i][randomRow].isStart && !currentChamber[i][randomRow].isEnd) {
+          currentChamber[i][randomRow].isWall = true;
+        }
       }
       // create a passage at a random node on an even index along the wall line (technically odd index on the original grid)
       const randomI = Math.floor(Math.random() * (currentChamber.length / 2)) * 2;
       currentChamber[randomI][randomRow].isWall = false;
 
-
-
+      // find the two new chambers
+      const newChambers = findTwoSplits(currentChamber, randomRow, false);
+      // push the new Chambers into queue only if they are length AND width 3 or higher
+      newChambers.forEach(newChamber => {
+        if (newChamber.length > 2 && newChamber[0].length > 2) {
+          chambersQueue.push(newChamber);
+        }
+      });
     }
 
-
-    window.requestAnimationFrame(recursiveDivision);
+    // recursiveDivision();
+    requestAnimationFrame(() => renderNodes(nodes));
+    requestAnimationFrame(recursiveDivision);
   }
 
   recursiveDivision();
+
+  // get all nodes that aren't walls
+  const notWallNodes = [];
+  nodes.forEach(col => {
+    col.forEach(node => {
+      if (!node.isWall) {
+        notWallNodes.push(node);
+      }
+    })
+  });
+
+  // choose random start and end nodes out of the notWallNodes array
+  // const randomStart = notWallNodes.splice([Math.floor(Math.random() * notWallNodes.length)], 1);
+  // const randomEnd = notWallNodes.splice([Math.floor(Math.random() * notWallNodes.length)], 1);
+  // randomStart.isStart = true;
+  // randomEnd.isEnd = true;
+
   renderNodes(nodes);
 }
 
