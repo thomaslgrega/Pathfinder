@@ -406,12 +406,13 @@ aStarBtn.addEventListener("click", prepareAStar);
 var dijkstrasBtn = document.getElementById("dijkstras-btn");
 dijkstrasBtn.addEventListener("click", prepareDijkstras);
 var randomWallsBtn = document.getElementById("random-btn");
-randomWallsBtn.addEventListener("click", handleRandomWalls); // const recursiveDivision = document.getElementById("recursive-division");
-// recursiveDivision.addEventListener("click", () => recursiveDivisionClosure());
+randomWallsBtn.addEventListener("click", handleRandomWalls);
+var recursiveDivision = document.getElementById("recursive-division");
+recursiveDivision.addEventListener("click", _recursiveDivision__WEBPACK_IMPORTED_MODULE_4__["default"]);
 
 var generateEmptyBoard = function generateEmptyBoard() {
-  var cols = 60;
-  var rows = 30;
+  var cols = 61;
+  var rows = 31;
   var nodes = new Array(cols);
 
   for (var i = 0; i < cols; i++) {
@@ -725,10 +726,10 @@ __webpack_require__.r(__webpack_exports__);
 // 2. choose random area to divide (first area will be the whole board)
 // 3. divide by adding walls all the way from one wall to another  
 // 4. choose random spot along the wall to make a gap
-// 5. if there are divided areas that have height AND width > 1, repeat
+// 5. if there are divided areas that have height AND width > 2, repeat
 // 6. else end process
 
-var recursiveDivisionClosure = function recursiveDivisionClosure(grid) {
+var recursiveDivisionClosure = function recursiveDivisionClosure() {
   // clear grid 
   var container = document.getElementById('pathfinder-grid');
 
@@ -737,8 +738,8 @@ var recursiveDivisionClosure = function recursiveDivisionClosure(grid) {
   } // make new grid with outside wall
 
 
-  var cols = 60;
-  var rows = 30;
+  var cols = 61;
+  var rows = 31;
   var nodes = new Array(cols);
 
   for (var i = 0; i < cols; i++) {
@@ -752,31 +753,75 @@ var recursiveDivisionClosure = function recursiveDivisionClosure(grid) {
       }
     }
   } // create random start and end nodes at opposite sides
+  // if (Math.random() < 0.5) {
+  //   const randomStartJ = Math.floor((Math.random() * 31));
+  //   const randomEndJ = Math.floor((Math.random() * 31));
+  //   nodes[0][randomStartJ].isStart = true;
+  //   nodes[0][randomStartJ].isWall = false;
+  //   nodes[60][randomEndJ].isEnd = true;
+  //   nodes[60][randomEndJ].isWall = false;
+  // } else {
+  //   const randomStartI = Math.floor((Math.random() * 61));
+  //   const randomEndI = Math.floor((Math.random() * 61));
+  //   nodes[randomStartI][0].isStart = true;
+  //   nodes[randomStartI][0].isWall = false;
+  //   nodes[randomEndI][30].isEnd = true;
+  //   nodes[randomEndI][30].isWall = false;
+  // }
+  // get the "chamber" after creating outside walls
 
 
-  if (Math.random() < 0.5) {
-    var randomStartJ = Math.floor(Math.random() * 30);
-    var randomEndJ = Math.floor(Math.random() * 30);
-    nodes[0][randomStartJ].isStart = true;
-    nodes[0][randomStartJ].isWall = false;
-    nodes[59][randomEndJ].isEnd = true;
-    nodes[59][randomEndJ].wall = false;
-  } else {
-    var randomStartI = Math.floor(Math.random() * 60);
-    var randomEndI = Math.floor(Math.random() * 60);
-    nodes[randomStartI][0].isStart = true;
-    nodes[randomStartI][0].isWall = false;
-    nodes[randomEndI][29].isEnd = true;
-    nodes[randomEndI][29].isWall = false;
-  }
+  Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes);
+  var initialChamber = [];
+  nodes.forEach(function (row, i) {
+    var newRow = [];
 
-  Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes); // const chambers = [initialChamber];
-  // recursiveDivision();
-};
+    if (i !== 0 && i !== 60) {
+      row.forEach(function (node) {
+        if (!node.isWall) {
+          newRow.push(node);
+        }
+      });
+      initialChamber.push(newRow);
+    }
+  }); // closure queue for the divided squares. I may switch to just randomly choosing from the array
 
-var recursiveDivision = function recursiveDivision() {
-  if (chambers.length === 0) return;
-  window.requestAnimationFrame(recursiveDivision);
+  var chambersQueue = [initialChamber];
+
+  var recursiveDivision = function recursiveDivision() {
+    if (chambersQueue.length === 0) return;
+    var currentChamber = chambersQueue.shift(); // randomly determine if chamber should be cut horizontal or vertical
+
+    var cutDirection = currentChamber.length > currentChamber[0].length ? "vert" : "horiz";
+
+    if (cutDirection === "vert") {
+      // have to create an odd index for the walls because 0th and last index are walls 
+      var randomCol = Math.floor(Math.random() * (currentChamber.length / 2 - 1)) * 2 + 1;
+
+      for (var _j = 0; _j < currentChamber[randomCol].length; _j++) {
+        currentChamber[randomCol][_j].isWall = true;
+      } // create a passage at a random node on an even index along the wall line (technically odd index on the original grid)
+
+
+      var randomJ = Math.floor(Math.random() * (currentChamber[randomCol].length / 2)) * 2;
+      currentChamber[randomCol][randomJ].isWall = false;
+    } else {
+      var randomRow = Math.floor(Math.random() * (currentChamber[0].length / 2 - 1)) * 2 + 1;
+
+      for (var _i = 0; _i < currentChamber.length; _i++) {
+        currentChamber[_i][randomRow].isWall = true;
+      } // create a passage at a random node on an even index along the wall line (technically odd index on the original grid)
+
+
+      var randomI = Math.floor(Math.random() * (currentChamber.length / 2)) * 2;
+      currentChamber[randomI][randomRow].isWall = false;
+    }
+
+    window.requestAnimationFrame(recursiveDivision);
+  };
+
+  recursiveDivision();
+  Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (recursiveDivisionClosure);
