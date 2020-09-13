@@ -11,16 +11,91 @@
   border: 2px solid rgb(58, 57, 57);
 }
 
-.nav-buttons {
+.nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 60px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid gray;
   margin: 0 auto;
-  background-color: #51dac6;
-  color: #d6cfee;
+  background-color: #262626;
+  color: #f7f7f7;
+
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 740px;
+}
+
+.app-name {
+  font-size: 30px;
+  margin: auto;
+  width: 200px;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.algorithms-dropdown-container, .obstacles-dropdown-container {
+  position: relative;
+  margin: auto 0;
+  width: 180px;
+  height: 60px;
+}
+
+.algorithms-span, .obstacles-span {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  padding: 22px 0;
+  letter-spacing: 1px;
+}
+
+#clear {
+  text-transform: uppercase;
+  font-weight: 800;
+  width: 140px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  color: #f7f7f7;
+}
+
+.algorithms-span:hover, .obstacles-span:hover, #clear:hover {
+  background-color: #f85339;
+}
+
+.algorithms-dropdown, .obstacles-dropdown {
+  width: 100%;
+  position: absolute;
+  top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 0px; 
+  overflow: hidden;
+}
+
+.show-dropdown {
+  height: 90px;
+  /* transition-duration: 0.3s; */
+  transition: ease-in-out 0.3s;
+  transition: ease-out 0.3s;
+}
+
+.algorithms-dropdown button, .obstacles-dropdown button {
+  width: 100%;
+  height: 45px;
+  color: #f7f7f7;
+  background-color: #3b3939;
+  cursor: pointer;
+}
+
+.algorithms-dropdown button:hover, .obstacles-dropdown button:hover {
+  background-color: #f85339;
 }
 
 .node {
@@ -30,7 +105,7 @@
 }
 
 .is-open {
-  background-color: rgb(17, 104, 217);
+  background-color: rgb(17, 170, 217);
 }
 
 .is-wall {
@@ -50,9 +125,9 @@
 }
 
 .start {
-  background-color: green;
+  background-color: #51aa51;
 }
 
 .end {
-  background-color: red;
+  background-color: tomato;
 }

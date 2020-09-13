@@ -6,15 +6,33 @@
   <link rel="stylesheet" href="./stylesheets/pathfinder.css">
   <link rel="stylesheet" href="./stylesheets/reset.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
   <title>Pathfinder</title>
 </head>
 <body>
-  <nav class="nav-buttons">
-    <button id="clear">Clear</button>
-    <button id="a-star-btn">A*</button>
-    <button id="dijkstras-btn">Dijkstras</button>
-    <button id="random-btn">Random Walls</button>
-    <button id="recursive-division">Recursive Division</button>
+  <nav class="nav">
+    <div class="nav-buttons">
+      <h1 class="app-name">Pathfinder</h1>
+      <div class="algorithms-dropdown-container">
+        <span class="algorithms-span dropdown-spans">Algorithms</span>
+        <div class="algorithms-dropdown dropdown-content">
+          <button id="a-star-btn" class="first-button">A* Algorithm</button>
+          <button id="dijkstras-btn">Dijkstra's Algorithm</button>
+        </div>
+      </div>
+      <div class="obstacles-dropdown-container">
+        <span class="obstacles-span dropdown-spans">Obstacles</span>
+        <div class="obstacles-dropdown dropdown-content">
+          <button id="recursive-division" class="first-button">Recursive Division</button>
+          <button id="random-btn">Random Walls</button>
+        </div>
+      </div>
+      <button id="clear">Clear</button>
+    </div>
+    <div class="personal-links">
+
+    </div>
   </nav>
   <div id="pathfinder-grid">
 

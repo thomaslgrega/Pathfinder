@@ -306,13 +306,11 @@ var dijkstrasAlgorithm = function dijkstrasAlgorithm(nodes) {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: addMouseEnterEvent, addMouseLeaveEvent */
+/*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMouseEnterEvent", function() { return addMouseEnterEvent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMouseLeaveEvent", function() { return addMouseLeaveEvent; });
 /* harmony import */ var _pathfinder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pathfinder */ "./src/pathfinder.js");
 /* harmony import */ var _node__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node */ "./src/node.js");
 /* harmony import */ var _astar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./astar */ "./src/astar.js");
@@ -462,6 +460,7 @@ grid.addEventListener("mouseup", function () {
   createWall = false;
   deleteWall = false;
 });
+
 var addMouseEnterEvent = function addMouseEnterEvent() {
   var nodesArr = Array.from(document.querySelectorAll(".node"));
   nodesArr.forEach(function (node) {
@@ -482,6 +481,7 @@ var addMouseEnterEvent = function addMouseEnterEvent() {
     });
   });
 };
+
 var addMouseLeaveEvent = function addMouseLeaveEvent() {
   var nodesArr = Array.from(document.querySelectorAll(".node"));
   nodesArr.forEach(function (node) {
@@ -494,8 +494,61 @@ var addMouseLeaveEvent = function addMouseLeaveEvent() {
     });
   });
 };
+
 addMouseLeaveEvent();
-addMouseEnterEvent();
+addMouseEnterEvent(); // Nav bar stuff
+
+var addAlgoDropDownEventListener = function addAlgoDropDownEventListener() {
+  var algoSpan = document.querySelector(".algorithms-span");
+  algoSpan.addEventListener("click", function () {
+    var algoDropdown = document.querySelector(".algorithms-dropdown");
+    var obstaclesDropdown = document.querySelector(".obstacles-dropdown");
+    algoDropdown.classList.toggle("show-dropdown");
+    obstaclesDropdown.classList.remove("show-dropdown");
+  });
+};
+
+var addObstacleDropDownEventListener = function addObstacleDropDownEventListener() {
+  var obstaclesSpan = document.querySelector(".obstacles-span");
+  obstaclesSpan.addEventListener("click", function () {
+    var obstaclesDropdown = document.querySelector(".obstacles-dropdown");
+    var algoDropdown = document.querySelector(".algorithms-dropdown");
+    obstaclesDropdown.classList.toggle("show-dropdown");
+    algoDropdown.classList.remove("show-dropdown");
+  });
+};
+
+var addDropDownCloseEvent = function addDropDownCloseEvent() {
+  var buttons = document.querySelectorAll("button");
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var algoDropdown = document.querySelector(".algorithms-dropdown");
+      var obstacleDropdown = document.querySelector(".obstacles-dropdown");
+      algoDropdown.classList.remove("show-dropdown");
+      obstacleDropdown.classList.remove("show-dropdown");
+    });
+  });
+  var htmlEle = document.querySelector("html");
+  debugger;
+  htmlEle.addEventListener("click", function () {
+    algoDropdown.classList.remove("show-dropdown");
+    obstacleDropdown.classList.remove("show-dropdown");
+  });
+};
+
+window.onclick = function (e) {
+  if (!e.target.matches('.dropdown-spans')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+
+    for (var i = 0; i < dropdowns.length; i++) {
+      dropdowns[i].classList.remove('show-dropdown');
+    }
+  }
+};
+
+addObstacleDropDownEventListener();
+addAlgoDropDownEventListener();
+addDropDownCloseEvent();
 
 /***/ }),
 
@@ -722,8 +775,7 @@ __webpack_require__.r(__webpack_exports__);
 
  // http://www.integral-domain.org/lwilliams/Applets/algorithms/recursivedivision.php
 // 1. make outside completely a wall
-//   a. choose two spots on outside to be a start and end node
-// 2. choose random area to divide (first area will be the whole board)
+// 2. choose area to divide (first area will be the whole board)
 // 3. divide by adding walls all the way from one wall to another  
 // 4. choose random spot along the wall to make a gap
 // 5. if there are divided areas that have height AND width > 2, repeat
@@ -810,23 +862,7 @@ var recursiveDivisionClosure = function recursiveDivisionClosure() {
   var randomEndJ = Math.floor(Math.random() * initialChamber[0].length);
   var randomEndI = Math.floor(Math.random() * initialChamber.length);
   initialChamber[randomStartI][randomStartJ].isStart = true;
-  initialChamber[randomEndI][randomEndJ].isEnd = true; // create random start and end nodes at opposite sides
-  // if (Math.random() < 0.5) {
-  //   const randomStartJ = Math.floor((Math.random() * 31));
-  //   const randomEndJ = Math.floor((Math.random() * 31));
-  //   nodes[0][randomStartJ].isStart = true;
-  //   nodes[0][randomStartJ].isWall = false;
-  //   nodes[60][randomEndJ].isEnd = true;
-  //   nodes[60][randomEndJ].isWall = false;
-  // } else {
-  //   const randomStartI = Math.floor((Math.random() * 61));
-  //   const randomEndI = Math.floor((Math.random() * 61));
-  //   nodes[randomStartI][0].isStart = true;
-  //   nodes[randomStartI][0].isWall = false;
-  //   nodes[randomEndI][30].isEnd = true;
-  //   nodes[randomEndI][30].isWall = false;
-  // }
-  // closure queue for the divided squares. I may switch to just randomly choosing from the array
+  initialChamber[randomEndI][randomEndJ].isEnd = true; // closure queue for the divided squares. I may switch to just randomly choosing from the array
 
   var chambersQueue = [initialChamber];
 
@@ -878,30 +914,13 @@ var recursiveDivisionClosure = function recursiveDivisionClosure() {
           chambersQueue.push(newChamber);
         }
       });
-    } // recursiveDivision();
+    }
 
-
-    requestAnimationFrame(function () {
-      return Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes);
-    });
     requestAnimationFrame(recursiveDivision);
+    Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes);
   };
 
-  recursiveDivision(); // get all nodes that aren't walls
-
-  var notWallNodes = [];
-  nodes.forEach(function (col) {
-    col.forEach(function (node) {
-      if (!node.isWall) {
-        notWallNodes.push(node);
-      }
-    });
-  }); // choose random start and end nodes out of the notWallNodes array
-  // const randomStart = notWallNodes.splice([Math.floor(Math.random() * notWallNodes.length)], 1);
-  // const randomEnd = notWallNodes.splice([Math.floor(Math.random() * notWallNodes.length)], 1);
-  // randomStart.isStart = true;
-  // randomEnd.isEnd = true;
-
+  recursiveDivision();
   Object(_pathfinder__WEBPACK_IMPORTED_MODULE_0__["renderNodes"])(nodes);
 };
 

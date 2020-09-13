@@ -144,7 +144,7 @@ grid.addEventListener("mouseup", () => {
   deleteWall = false;
 });
 
-export const addMouseEnterEvent = () => {
+const addMouseEnterEvent = () => {
   const nodesArr = Array.from(document.querySelectorAll(".node"));
   nodesArr.forEach(node => {
     node.addEventListener("mouseenter", (e) => {
@@ -165,7 +165,7 @@ export const addMouseEnterEvent = () => {
   })
 }
 
-export const addMouseLeaveEvent = () => {
+const addMouseLeaveEvent = () => {
   const nodesArr = Array.from(document.querySelectorAll(".node"));
   nodesArr.forEach(node => {
     node.addEventListener("mouseleave", (e) => {
@@ -180,3 +180,57 @@ export const addMouseLeaveEvent = () => {
 
 addMouseLeaveEvent();
 addMouseEnterEvent();
+
+// Nav bar stuff
+
+const addAlgoDropDownEventListener = () => {
+  const algoSpan = document.querySelector(".algorithms-span");
+  algoSpan.addEventListener("click", () => {
+    const algoDropdown = document.querySelector(".algorithms-dropdown");
+    const obstaclesDropdown = document.querySelector(".obstacles-dropdown");
+    algoDropdown.classList.toggle("show-dropdown");
+    obstaclesDropdown.classList.remove("show-dropdown")
+  })
+}
+
+const addObstacleDropDownEventListener = () => {
+  const obstaclesSpan = document.querySelector(".obstacles-span");
+  obstaclesSpan.addEventListener("click", () => {
+    const obstaclesDropdown = document.querySelector(".obstacles-dropdown");
+    const algoDropdown = document.querySelector(".algorithms-dropdown");
+    obstaclesDropdown.classList.toggle("show-dropdown");
+    algoDropdown.classList.remove("show-dropdown")
+  })
+}
+
+const addDropDownCloseEvent = () => {
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const algoDropdown = document.querySelector(".algorithms-dropdown");
+      const obstacleDropdown = document.querySelector(".obstacles-dropdown");
+      algoDropdown.classList.remove("show-dropdown");
+      obstacleDropdown.classList.remove("show-dropdown");
+    })
+  })
+
+  const htmlEle = document.querySelector("html");
+  debugger
+  htmlEle.addEventListener("click", () => {
+    algoDropdown.classList.remove("show-dropdown");
+    obstacleDropdown.classList.remove("show-dropdown");
+  })
+}
+
+window.onclick = (e) => {
+  if (!e.target.matches('.dropdown-spans')) {
+    const dropdowns = document.getElementsByClassName("dropdown-content");
+    for (let i = 0; i < dropdowns.length; i++) {
+      dropdowns[i].classList.remove('show-dropdown');
+    }
+  }
+}
+
+addObstacleDropDownEventListener();
+addAlgoDropDownEventListener();
+addDropDownCloseEvent();
