@@ -185,9 +185,10 @@ addMouseEnterEvent();
 
 const addAlgoDropDownEventListener = () => {
   const algoSpan = document.querySelector(".algorithms-span");
+  const algoDropdown = document.querySelector(".algorithms-dropdown");
+  const obstaclesDropdown = document.querySelector(".obstacles-dropdown");
+
   algoSpan.addEventListener("click", () => {
-    const algoDropdown = document.querySelector(".algorithms-dropdown");
-    const obstaclesDropdown = document.querySelector(".obstacles-dropdown");
     algoDropdown.classList.toggle("show-dropdown");
     obstaclesDropdown.classList.remove("show-dropdown")
   })
@@ -195,9 +196,10 @@ const addAlgoDropDownEventListener = () => {
 
 const addObstacleDropDownEventListener = () => {
   const obstaclesSpan = document.querySelector(".obstacles-span");
+  const obstaclesDropdown = document.querySelector(".obstacles-dropdown");
+  const algoDropdown = document.querySelector(".algorithms-dropdown");
+
   obstaclesSpan.addEventListener("click", () => {
-    const obstaclesDropdown = document.querySelector(".obstacles-dropdown");
-    const algoDropdown = document.querySelector(".algorithms-dropdown");
     obstaclesDropdown.classList.toggle("show-dropdown");
     algoDropdown.classList.remove("show-dropdown")
   })
@@ -213,15 +215,21 @@ const addDropDownCloseEvent = () => {
       obstacleDropdown.classList.remove("show-dropdown");
     })
   })
-
-  const htmlEle = document.querySelector("html");
-  debugger
-  htmlEle.addEventListener("click", () => {
-    algoDropdown.classList.remove("show-dropdown");
-    obstacleDropdown.classList.remove("show-dropdown");
-  })
 }
 
+const addExplanationEvent = () => {
+  const questionIcon = document.querySelector(".fa-question-circle")
+  const explanationContent = document.querySelector(".explanation-content");
+  questionIcon.addEventListener("mouseenter", () => {
+    explanationContent.classList.add("show-explanation");
+  });
+
+  questionIcon.addEventListener("mouseleave", () => {
+    explanationContent.classList.remove("show-explanation");
+  });
+} 
+
+  // close dropdowns when you click outside the dropdown
 window.onclick = (e) => {
   if (!e.target.matches('.dropdown-spans')) {
     const dropdowns = document.getElementsByClassName("dropdown-content");
@@ -234,3 +242,4 @@ window.onclick = (e) => {
 addObstacleDropDownEventListener();
 addAlgoDropDownEventListener();
 addDropDownCloseEvent();
+addExplanationEvent();

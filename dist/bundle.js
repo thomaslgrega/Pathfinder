@@ -500,9 +500,9 @@ addMouseEnterEvent(); // Nav bar stuff
 
 var addAlgoDropDownEventListener = function addAlgoDropDownEventListener() {
   var algoSpan = document.querySelector(".algorithms-span");
+  var algoDropdown = document.querySelector(".algorithms-dropdown");
+  var obstaclesDropdown = document.querySelector(".obstacles-dropdown");
   algoSpan.addEventListener("click", function () {
-    var algoDropdown = document.querySelector(".algorithms-dropdown");
-    var obstaclesDropdown = document.querySelector(".obstacles-dropdown");
     algoDropdown.classList.toggle("show-dropdown");
     obstaclesDropdown.classList.remove("show-dropdown");
   });
@@ -510,9 +510,9 @@ var addAlgoDropDownEventListener = function addAlgoDropDownEventListener() {
 
 var addObstacleDropDownEventListener = function addObstacleDropDownEventListener() {
   var obstaclesSpan = document.querySelector(".obstacles-span");
+  var obstaclesDropdown = document.querySelector(".obstacles-dropdown");
+  var algoDropdown = document.querySelector(".algorithms-dropdown");
   obstaclesSpan.addEventListener("click", function () {
-    var obstaclesDropdown = document.querySelector(".obstacles-dropdown");
-    var algoDropdown = document.querySelector(".algorithms-dropdown");
     obstaclesDropdown.classList.toggle("show-dropdown");
     algoDropdown.classList.remove("show-dropdown");
   });
@@ -528,13 +528,19 @@ var addDropDownCloseEvent = function addDropDownCloseEvent() {
       obstacleDropdown.classList.remove("show-dropdown");
     });
   });
-  var htmlEle = document.querySelector("html");
-  debugger;
-  htmlEle.addEventListener("click", function () {
-    algoDropdown.classList.remove("show-dropdown");
-    obstacleDropdown.classList.remove("show-dropdown");
-  });
 };
+
+var addExplanationEvent = function addExplanationEvent() {
+  var questionIcon = document.querySelector(".fa-question-circle");
+  var explanationContent = document.querySelector(".explanation-content");
+  questionIcon.addEventListener("mouseenter", function () {
+    explanationContent.classList.add("show-explanation");
+  });
+  questionIcon.addEventListener("mouseleave", function () {
+    explanationContent.classList.remove("show-explanation");
+  });
+}; // close dropdowns when you click outside the dropdown
+
 
 window.onclick = function (e) {
   if (!e.target.matches('.dropdown-spans')) {
@@ -549,6 +555,7 @@ window.onclick = function (e) {
 addObstacleDropDownEventListener();
 addAlgoDropDownEventListener();
 addDropDownCloseEvent();
+addExplanationEvent();
 
 /***/ }),
 

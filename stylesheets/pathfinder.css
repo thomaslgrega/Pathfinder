@@ -98,6 +98,14 @@
   background-color: #f85339;
 }
 
+.explanation-content {
+  display: none;
+}
+
+.show-explanation {
+  display: block;
+}
+
 .node {
   width: 18px;
   height: 18px;
@@ -130,4 +138,28 @@
 
 .end {
   background-color: tomato;
+}
+
+.fa-question-circle {
+  position: relative;
+  top: -40px;
+  font-size: 20px;
+  left: 780px;
+  cursor: help;
+}
+
+.fa-angle-down {
+  padding-left: 10px;
+  pointer-events: none;
+}
+
+.explanation-content {
+  position: absolute;
+  top: 40px;
+  background-color: #3b3939;
+  font-size: 13px;
+  padding: 10px;
+  width: 300px;
+  letter-spacing: 1px;
+  line-height: 18px;
 }
