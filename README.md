@@ -25,10 +25,10 @@ const manhattanDistance = (checkNode, endNode) => {
 }
 ```
 
-By simply calculating the distance between the current node and the ending node using the Manhattan Distance (if there are diagonal traversal, it would be better to use the pythagorean theorem), the algorithm will calculate the total "score" for each node and traverse accordingly.
+By simply calculating the distance between the current node and the ending node using the Manhattan Distance (if there are diagonal traversal, it would be better to use the pythagorean theorem), the algorithm will calculate the total "score" for each node and traverse accordingly. Like Dijkstra's algorithm, A* is a weighted algorithm.
 
 ### Recursive Division
-Other than allowing the user to draw their own obstacles and generate walls at completely random spots on the grid, I also implemented a maze generator using recursive division. During each recursive call, the algorithm draws a line to split a chamber and clears one random node to make a passage. This allows the whole maze to be connected without fail. After none of the chambers can be split, the recursion stops and a maze is created. This creates a satisfying visual when combined with the pathfinder.
+Other than allowing the user to draw their own obstacles and generate walls at completely random spots on the grid, I also implemented a maze generator using recursive division. During each recursive call, the algorithm draws a line to split a chamber and clears one random node along that line to make a passage. This allows the whole maze to be connected without fail. After all the chambers can't be split anymore, the recursion stops and a maze is created. This creates a satisfying visual when combined with the pathfinder.
 
 ### Other Notes
 Animation is created simply using JavaScript with requestAnimationFrame.
