@@ -13,6 +13,8 @@
 
 .nav {
   position: fixed;
+  display: flex;
+  justify-content: space-between;
   top: 0;
   left: 0;
   width: 100%;
@@ -24,13 +26,20 @@
 
 }
 
+.main-function-btns {
+  display: flex;
+  width: 750px;
+  margin-left: 40px;
+}
+
 .nav-buttons {
   display: flex;
-  justify-content: space-around;
-  width: 740px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .app-name {
+  display: inline-block;
   font-size: 30px;
   margin: auto;
   width: 200px;
@@ -40,7 +49,7 @@
 }
 
 .algorithms-dropdown-container, .obstacles-dropdown-container {
-  position: relative;
+  /* position: relative; */
   margin: auto 0;
   width: 180px;
   height: 60px;
@@ -50,9 +59,18 @@
   display: inline-block;
   cursor: pointer;
   text-align: center;
-  width: 100%;
+  width: 180px;
   padding: 22px 0;
   letter-spacing: 1px;
+}
+
+.fa-question-circle {
+  display: inline-block;
+  text-align: center;
+  padding: 20px 0 20px 25px;
+  font-size: 20px;
+  cursor: help;
+
 }
 
 #clear {
@@ -69,7 +87,7 @@
 }
 
 .algorithms-dropdown, .obstacles-dropdown {
-  width: 100%;
+  width: 180px;
   position: absolute;
   top: 60px;
   display: flex;
@@ -140,14 +158,6 @@
   background-color: tomato;
 }
 
-.fa-question-circle {
-  position: relative;
-  top: -40px;
-  font-size: 20px;
-  left: 780px;
-  cursor: help;
-}
-
 .fa-angle-down {
   padding-left: 10px;
   pointer-events: none;
@@ -158,8 +168,43 @@
   top: 40px;
   background-color: #3b3939;
   font-size: 13px;
-  padding: 10px;
+  padding: 10px 15px 15px 15px;
   width: 300px;
   letter-spacing: 1px;
   line-height: 18px;
+}
+
+.personal-links {
+  display: flex;
+  justify-content: space-around;
+  width: 120px;
+  padding-top: 15px;
+  margin-right: 100px;
+}
+
+.fa-github {
+  color: #f7f7f7;
+  /* position: relative; */
+  font-size: 25px;
+  top: 18px;
+  left: 300px;
+  text-decoration: none;
+}
+
+.fa-linkedin {
+  color: #f7f7f7;
+  /* position: relative; */
+  font-size: 27px;
+  top: 18px;
+  left: 325px;
+  text-decoration: none;
+}
+
+.fa-angellist {
+  color: #f7f7f7;
+  /* position: relative; */
+  font-size: 27px;
+  top: -8px;
+  right: -700px;
+  text-decoration: none;
 }

@@ -13,30 +13,35 @@
 <body>
   <nav class="nav">
     <div class="nav-buttons">
-      <h1 class="app-name">Pathfinder</h1>
-      <div class="algorithms-dropdown-container">
-        <span class="algorithms-span dropdown-spans">Algorithms<span class="fas fa-angle-down algorithms-angle-down"></span></span>
-        <div class="algorithms-dropdown dropdown-content">
-          <button id="a-star-btn" class="first-button">A* Algorithm</button>
-          <button id="dijkstras-btn">Dijkstra's Algorithm</button>
+      <div class="main-function-btns">
+        <h1 class="app-name">Pathfinder</h1>
+        <div class="algorithms-dropdown-container">
+          <span class="algorithms-span dropdown-spans">Algorithms<span class="fas fa-angle-down algorithms-angle-down"></span></span>
+          <div class="algorithms-dropdown dropdown-content">
+            <button id="a-star-btn" class="first-button">A* Algorithm</button>
+            <button id="dijkstras-btn">Dijkstra's Algorithm</button>
+          </div>
+        </div>
+        <div class="obstacles-dropdown-container">
+          <span class="obstacles-span dropdown-spans">Obstacles<i class="fas fa-angle-down obstacles-angle-down"></i></span>
+          <div class="obstacles-dropdown dropdown-content">
+            <button id="recursive-division" class="first-button">Recursive Division</button>
+            <button id="random-btn">Random Walls</button>
+          </div>
+        </div>
+        <button id="clear">Clear</button>
+        <div class="fas fa-question-circle">
+          <div class="explanation-content">
+            <span>You can click and hold to draw walls or drag the start and end points! You can also generate mazes from the
+              Obstacles dropdown. Once you're done, choose an algorithm to see the shortest path.</span>
+          </div>
         </div>
       </div>
-      <div class="obstacles-dropdown-container">
-        <span class="obstacles-span dropdown-spans">Obstacles<i class="fas fa-angle-down obstacles-angle-down"></i></span>
-        <div class="obstacles-dropdown dropdown-content">
-          <button id="recursive-division" class="first-button">Recursive Division</button>
-          <button id="random-btn">Random Walls</button>
-        </div>
+      <div class="personal-links">
+        <a href="https://github.com/thomaslgrega" target="_blank"class="fab fa-github"></a>
+        <a href="https://www.linkedin.com/in/thomas-grega-4931711b6/" class="fab fa-linkedin" target="_blank"></a>
+        <a href="https://angel.co/u/thomas-grega" target="_blank" class="fab fa-angellist"></a>
       </div>
-      <button id="clear">Clear</button>
-    </div>
-    <div class="fas fa-question-circle">
-      <div class="explanation-content">
-        <span>You can click and hold to draw walls or drag the start and end points! You can also generate mazes from the Obstacles dropdown. Once you're done, choose an algorithm to see the shortest path.</span>
-      </div>
-    </div>
-    <div class="personal-links">
-
     </div>
   </nav>
   <div id="pathfinder-grid">
