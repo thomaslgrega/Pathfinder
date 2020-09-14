@@ -2,10 +2,8 @@ import Node from "./node";
 
 // creates a 2D array full of Node objects
 export const createNodes = (algo) => {
-  // randomly generate numbers to determine start and end Nodes
-
   const nodes = [];
-  const rows = Array.from(document.querySelectorAll('.row-div'));
+  const rows = Array.from(document.querySelectorAll('.col-div'));
   rows.forEach((row, i) => {
     const nodeRow = [];
     Array.from(row.children).forEach((nodeDiv, j) => {
@@ -39,7 +37,7 @@ export const renderNodes = (nodes) => {
 
   nodes.forEach(row => {
     let newRow = document.createElement("div");
-    newRow.classList.add("row-div")
+    newRow.classList.add("col-div")
     row.forEach(node => {
       let newDiv = document.createElement("div");
       newDiv.classList.add('node');

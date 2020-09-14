@@ -23,15 +23,6 @@ const aStarAlgorithm = (nodes) => {
   });
 
   if (!visited.includes(start)) {
-    // nodes.forEach(row => {
-    //   row.forEach(node => {
-    //     if (node.isStart) {
-    //       start = node;
-    //     } else if (node.isEnd) {
-    //       end = node;
-    //     }
-    //   })
-    // });
     openNodes = [];
     visited = [];
     finalPath = [];

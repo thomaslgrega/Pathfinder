@@ -119,15 +119,6 @@ var aStarAlgorithm = function aStarAlgorithm(nodes) {
   });
 
   if (!visited.includes(start)) {
-    // nodes.forEach(row => {
-    //   row.forEach(node => {
-    //     if (node.isStart) {
-    //       start = node;
-    //     } else if (node.isEnd) {
-    //       end = node;
-    //     }
-    //   })
-    // });
     openNodes = [];
     visited = [];
     finalPath = [];
@@ -617,7 +608,7 @@ var Node = /*#__PURE__*/function () {
     } // heuristic - basically a guess of how far to the end node (straight shot distance to end node)
 
 
-    this.h = 0; // the total of j and h (basically, the lowest h is the path that the algorithm will take)
+    this.h = 0; // the total of g and h (basically, the lowest h is the path that the algorithm will take)
 
     this.f = 0;
     this.isOpen = false;
@@ -674,9 +665,8 @@ __webpack_require__.r(__webpack_exports__);
  // creates a 2D array full of Node objects
 
 var createNodes = function createNodes(algo) {
-  // randomly generate numbers to determine start and end Nodes
   var nodes = [];
-  var rows = Array.from(document.querySelectorAll('.row-div'));
+  var rows = Array.from(document.querySelectorAll('.col-div'));
   rows.forEach(function (row, i) {
     var nodeRow = [];
     Array.from(row.children).forEach(function (nodeDiv, j) {
@@ -708,7 +698,7 @@ var renderNodes = function renderNodes(nodes) {
 
   nodes.forEach(function (row) {
     var newRow = document.createElement("div");
-    newRow.classList.add("row-div");
+    newRow.classList.add("col-div");
     row.forEach(function (node) {
       var newDiv = document.createElement("div");
       newDiv.classList.add('node');
@@ -823,13 +813,11 @@ var findTwoSplits = function findTwoSplits(chamber, idx, vertBool) {
 
 var recursiveDivisionClosure = function recursiveDivisionClosure() {
   // clear grid 
-  var container = document.getElementById('pathfinder-grid');
-
-  while (container.firstChild) {
-    container.removeChild(container.firstChild);
-  } // make new grid with outside wall
-
-
+  // const container = document.getElementById('pathfinder-grid');
+  // while (container.firstChild) {
+  //   container.removeChild(container.firstChild);
+  // }
+  // make new grid with outside wall
   var cols = 61;
   var rows = 31;
   var nodes = new Array(cols);

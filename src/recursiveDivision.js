@@ -44,10 +44,10 @@ const findTwoSplits = (chamber, idx, vertBool) => {
 
 const recursiveDivisionClosure = () => {
   // clear grid 
-  const container = document.getElementById('pathfinder-grid');
-  while (container.firstChild) {
-    container.removeChild(container.firstChild);
-  }
+  // const container = document.getElementById('pathfinder-grid');
+  // while (container.firstChild) {
+  //   container.removeChild(container.firstChild);
+  // }
   
   // make new grid with outside wall
   const cols = 61;

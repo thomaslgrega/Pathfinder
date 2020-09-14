@@ -49,7 +49,6 @@
 }
 
 .algorithms-dropdown-container, .obstacles-dropdown-container {
-  /* position: relative; */
   margin: auto 0;
   width: 180px;
   height: 60px;
@@ -84,6 +83,7 @@
 
 .algorithms-span:hover, .obstacles-span:hover, #clear:hover {
   background-color: #f85339;
+  transition-duration: 0.2s;
 }
 
 .algorithms-dropdown, .obstacles-dropdown {
@@ -99,9 +99,9 @@
 
 .show-dropdown {
   height: 90px;
-  /* transition-duration: 0.3s; */
-  transition: ease-in-out 0.3s;
-  transition: ease-out 0.3s;
+  transition-duration: 0.3s;
+  /* transition: ease-in-out 0.3s;
+  transition: ease-out 0.3s; */
 }
 
 .algorithms-dropdown button, .obstacles-dropdown button {
@@ -114,6 +114,7 @@
 
 .algorithms-dropdown button:hover, .obstacles-dropdown button:hover {
   background-color: #f85339;
+  transition-duration: 0.2s;
 }
 
 .explanation-content {
@@ -207,4 +208,9 @@
   top: -8px;
   right: -700px;
   text-decoration: none;
+}
+
+.fa-angellist:hover, .fa-linkedin:hover, .fa-github:hover {
+  color: #f37967;
+  transition-duration: 0.2s;
 }

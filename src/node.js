@@ -21,7 +21,7 @@ class Node {
 
     // heuristic - basically a guess of how far to the end node (straight shot distance to end node)
     this.h = 0;
-    // the total of j and h (basically, the lowest h is the path that the algorithm will take)
+    // the total of g and h (basically, the lowest h is the path that the algorithm will take)
     this.f = 0;
     this.isOpen = false;
     this.visited = false;
