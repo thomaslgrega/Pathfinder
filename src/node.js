@@ -28,10 +28,6 @@ class Node {
     this.connectedNodes = [];
     this.isPath = false;
     this.isWall = isWall;
-    // randomly determine if this node will be a wall
-    // if (Math.random() < 0.25 && !this.isStart && !this.isEnd) {
-    //   this.isWall = true;
-    // }
 
     // the previous node that we got here from. Used to backtrack when we reach the end node to
     // find the path

@@ -43,7 +43,7 @@ export const renderNodes = (nodes) => {
     row.forEach(node => {
       let newDiv = document.createElement("div");
       newDiv.classList.add('node');
-      // if (node.isStart) {
+
       if (node.isStart) {
         newDiv.classList.add('start');
         newDiv.classList.add('open');

@@ -2,6 +2,7 @@ import { renderNodes } from "./pathfinder";
 import Node from "./node";
 
 // http://www.integral-domain.org/lwilliams/Applets/algorithms/recursivedivision.php
+// https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_division_method
 
 // 1. make outside completely a wall
 // 2. choose area to divide (first area will be the whole board)

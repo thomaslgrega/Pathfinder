@@ -624,11 +624,7 @@ var Node = /*#__PURE__*/function () {
     this.visited = false;
     this.connectedNodes = [];
     this.isPath = false;
-    this.isWall = isWall; // randomly determine if this node will be a wall
-    // if (Math.random() < 0.25 && !this.isStart && !this.isEnd) {
-    //   this.isWall = true;
-    // }
-    // the previous node that we got here from. Used to backtrack when we reach the end node to
+    this.isWall = isWall; // the previous node that we got here from. Used to backtrack when we reach the end node to
     // find the path
 
     this.cameFrom;
@@ -715,7 +711,7 @@ var renderNodes = function renderNodes(nodes) {
     newRow.classList.add("row-div");
     row.forEach(function (node) {
       var newDiv = document.createElement("div");
-      newDiv.classList.add('node'); // if (node.isStart) {
+      newDiv.classList.add('node');
 
       if (node.isStart) {
         newDiv.classList.add('start');
@@ -781,6 +777,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node */ "./src/node.js");
 
  // http://www.integral-domain.org/lwilliams/Applets/algorithms/recursivedivision.php
+// https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_division_method
 // 1. make outside completely a wall
 // 2. choose area to divide (first area will be the whole board)
 // 3. divide by adding walls all the way from one wall to another  
